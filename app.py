@@ -172,7 +172,7 @@ def get_images_from_huggingface(prompt):
         return None
 
     # URL del modelo (Stable Diffusion XL Base 1.0 - Muy buena calidad)
-    API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+    API_URL = "https://router.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
     headers = {"Authorization": f"Bearer {hf_api_key}"}
     
     payload = {"inputs": prompt}
@@ -184,19 +184,16 @@ def get_images_from_huggingface(prompt):
     # A veces hay que reintentar, pero para simplificar, si falla devolvemos None.
     if response.status_code != 200:
         print(f"Error HF: {response.content}")
+        print(f"Error HF Body: {response.content}")
         return None
-
-    # La respuesta son los BYTES de la imagen
-    image_bytes = response.content
     
-    # Convertimos bytes a Base64
-    image = Image.open(io.BytesIO(image_bytes))
+    image = Image.open(io.BytesIO(response.content))
     buffered = io.BytesIO()
     image.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
     
-    # Devolvemos la cadena lista para poner en el src de la imagen HTML
     return f"data:image/png;base64,{img_str}"
+    
 
 
 @app.route("/", methods = ['GET']) #"/" --> endpoint
