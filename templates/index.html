@@ -1,0 +1,23 @@
+<form action="/predict" method="POST">
+    <h3>Opción 1: Sube una URL</h3>
+    <input type="text" name="img_url" placeholder="https://ejemplo.com/pinguino.jpg">
+    <button type="submit">Predecir por Foto</button>
+</form>
+
+<hr>
+
+<form action="/predict" method="POST">
+    <h3>Opción 2: Datos Manuales</h3>
+    <label>Largo Pico (mm): <input type="number" step="0.1" name="bill_length_mm" required></label><br>
+    <label>Alto Pico (mm): <input type="number" step="0.1" name="bill_depth_mm" required></label><br>
+    <label>Largo Aleta (mm): <input type="number" step="0.1" name="flipper_length_mm" required></label><br>
+    <label>Masa Corporal (g): <input type="number" step="1" name="body_mass_g" required></label><br>
+    
+    <label>Sexo:</label>
+    <select name="sex_num">
+        <option value="1.0">Macho</option>
+        <option value="0.0">Hembra</option>
+    </select>
+    <br><br>
+    <button type="submit">Predecir por Datos</button>
+</form>

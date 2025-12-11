@@ -1,0 +1,15 @@
+flask
+scikit-learn
+seaborn
+gunicorn
+numpy
+pandas
+sqlalchemy
+psycopg2-binary
+cohere
+python-dotenv
+onnxruntime
+onnxmltools
+onnx
+onnxconverter-common
+Pillow
