@@ -171,8 +171,9 @@ def get_images_from_huggingface(prompt):
         print("Falta HUGGINGFACE_API_KEY")
         return None
 
+    model_id = "runwayml/stable-diffusion-v1-5"
     # URL del modelo (Stable Diffusion XL Base 1.0 - Muy buena calidad)
-    API_URL = "https://router.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+    API_URL = f"https://router.huggingface.co/models/{model_id}"
     headers = {"Authorization": f"Bearer {hf_api_key}"}
     
     payload = {"inputs": prompt}
