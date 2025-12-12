@@ -195,8 +195,7 @@ def get_images(features, species):
     
 def post_mongo(features, species, adopt=0, img_url=None):
     collection = db['Pinguinos']
-    if not collection: 
-        return
+
     doc = {
         "species": species,
         "bill_length_mm": features['bill_length_mm'],
@@ -239,11 +238,11 @@ def predict():
     else:
         print("Procesando entrada manual.")
         features = {
-                "bill_length_mm": request.form.get("bill_length_mm"),
-                "bill_depth_mm": request.form.get("bill_depth_mm"),
-                "flipper_length_mm": request.form.get("flipper_length_mm"),
-                "body_mass_g": request.form.get("body_mass_g"),
-                "sex_num": request.form.get("sex_num")
+                "bill_length_mm": float(request.form.get("bill_length_mm")),
+                "bill_depth_mm": float(request.form.get("bill_depth_mm")),
+                "flipper_length_mm": float(request.form.get("flipper_length_mm")),
+                "body_mass_g": float(request.form.get("body_mass_g")),
+                "sex_num": float(request.form.get("sex_num"))
             }
         
         if features:
