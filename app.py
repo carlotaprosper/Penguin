@@ -205,7 +205,7 @@ def predict():
                 f"Aleta {features['flipper_length_mm']}mm, Peso {features['body_mass_g']}g, Sexo {features['sex_num']}."
             )
             if not img_gen:
-                generated_img_url = get_images(features, species)
+                img_gen = get_images(features, species)
 
     return render_template("index2.html", prediction= prediccion, features = features, img_url = img_url, img_gen=img_gen)
 
