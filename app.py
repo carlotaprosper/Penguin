@@ -4,11 +4,8 @@ import json
 import os
 import numpy as np
 import onnxruntime as ort
-import re
 import requests
-import io
-import base64
-from PIL import Image  # Necesario para procesar la imagen
+from urllib.parse import quote
 from dotenv import load_dotenv
 
 # leemos el .env
@@ -17,7 +14,6 @@ load_dotenv() # se le pone la ruta al .env
 
 # leer variable de entorno cohere_api_key
 cohere_api_key = os.getenv("COHERE_API_KEY")
-hf_api_key = os.getenv("HUGGING_FACE_API_KEY")
 
 co = cohere.ClientV2(api_key=cohere_api_key)
 
@@ -153,47 +149,24 @@ def get_features_from_image(img_url):
 
     return prediccion, features
 
-def get_prompt(features, species_name):
-    # Convertimos los datos a texto para la IA
-    f = features
-    prompt = f"National geographic photo of a real {species_name} penguin in Antarctica. "
-    
-    # Añadimos detalles basados en los datos
-    mass = float(f["body_mass_g"])
-    if mass > 5000: prompt += "The penguin is very fat and fluffy. "
-    elif mass < 3500: prompt += "The penguin is small and thin. "
-    
-    prompt += "Cinematic lighting, hyperrealistic, 8k, highly detailed texture, snow background."
-    return prompt
  
-def get_images_from_huggingface(prompt):
-    if not hf_api_key:
-        print("Falta HUGGINGFACE_API_KEY")
-        return None
-
-    model_id = "stabilityai/stable-diffusion-2-1"
-    # URL del modelo (Stable Diffusion XL Base 1.0 - Muy buena calidad)
-    API_URL = f"https://router.huggingface.co/models/{model_id}"
-    headers = {"Authorization": f"Bearer {hf_api_key}"}
+def get_images(features, species):
+    f = features
+    # Crear prompt
+    prompt = f"National geographic photo of a real {species} penguin in Antarctica. "
+    mass = float(f["body_mass_g"])
+    if mass > 5000: prompt += "The penguin is big and fluffy. "
+    elif mass < 3500: prompt += "The penguin is small. "
+    prompt += "Hyperrealistic, 8k, snow, cinematic lighting."
     
-    payload = {"inputs": prompt}
-
-    print(f"Generando imagen con Hugging Face: {prompt}")
-    response = requests.post(API_URL, headers=headers, json=payload)
+    # Codificar prompt para URL (cambia espacios por %20, etc.)
+    encoded_prompt = quote(prompt)
     
-    # Si el modelo está "dormido", Hugging Face devuelve un error de carga.
-    # A veces hay que reintentar, pero para simplificar, si falla devolvemos None.
-    if response.status_code != 200:
-        print(f"Error HF: {response.content}")
-        print(f"Error HF Body: {response.content}")
-        return None
+    # Construir URL directa
+    # seed=42 asegura consistencia, nologo=true quita marcas de agua si es posible
+    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&nologo=true&seed={int(mass)}"
     
-    image = Image.open(io.BytesIO(response.content))
-    buffered = io.BytesIO()
-    image.save(buffered, format="PNG")
-    img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
-    
-    return f"data:image/png;base64,{img_str}"
+    return image_url
     
 
 
@@ -207,7 +180,7 @@ def predict():
     img_url = request.form.get("img_url")
     features = None
     prediccion = ""
-    img_b64 = None # Variable para la imagen generada
+    img_gen = None
 
     if img_url:
         print(f"Procesando la imagen")
@@ -231,11 +204,10 @@ def predict():
                 f"Datos usados: Pico {features['bill_length_mm']}x{features['bill_depth_mm']}mm, "
                 f"Aleta {features['flipper_length_mm']}mm, Peso {features['body_mass_g']}g, Sexo {features['sex_num']}."
             )
-            if not img_url and hf_api_key:
-                hf_prompt = get_prompt(features, species)
-                img_b64 = get_images_from_huggingface(hf_prompt) 
+            if not img_gen:
+                generated_img_url = get_images(features, species)
 
-    return render_template("index2.html", prediction= prediccion, features = features, img_url = img_url, img_b64=img_b64)
+    return render_template("index2.html", prediction= prediccion, features = features, img_url = img_url, img_gen=img_gen)
 
 if __name__ == "__main__":
     app.run(debug = True, host = "localhost", port  = 5000)
