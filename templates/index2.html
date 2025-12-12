@@ -97,17 +97,17 @@
 
             <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
                 
-                {% if img_url_input %}
+                {% if img_url %}
                 <div class="image-container">
                     <span class="img-label">📷 Imagen Original</span>
-                    <img src="{{ img_url_input }}" alt="Pingüino analizado" class="result-image">
+                    <img src="{{ img_url }}" alt="Pingüino analizado" class="result-image">
                 </div>
                 {% endif %}
 
-                {% if generated_img_url %}
+                {% if img_gen %}
                 <div class="image-container">
                     <span class="img-label">✨ Recreación por IA <span class="generated-badge">Pollinations AI</span></span>
-                    <img src="{{ generated_img_url }}" alt="Pingüino generado" class="result-image">
+                    <img src="{{ img_gen }}" alt="Pingüino generado" class="result-image">
                 </div>
                 {% endif %}
                 
