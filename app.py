@@ -172,7 +172,7 @@ def get_features_from_image(img_url):
                 f"Aleta {features['flipper_length_mm']}mm, Peso {features['body_mass_g']}g, Sexo {features['sex_num']}."
             )
 
-    return prediccion, features
+    return prediccion, features, species
 
  
 def get_images(features, species):
@@ -233,7 +233,7 @@ def predict():
 
     if img_url:
         print(f"Procesando la imagen")
-        prediccion, features = get_features_from_image(img_url)
+        prediccion, features, species = get_features_from_image(img_url)
         post_mongo(features, species, adopt=0, img_url=img_url)
         
     else:
