@@ -48,7 +48,7 @@
         /* Estilos para imágenes */
         .image-container {
             margin: 20px 0;
-            flex: 1; /* Para que se distribuyan bien si hay dos */
+            flex: 1; 
             min-width: 300px;
         }
         .result-image {
@@ -65,7 +65,7 @@
             color: #555;
         }
         .generated-badge {
-             background-color: #ff9800; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; vertical-align: middle;
+             background-color: #3f51b5; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; vertical-align: middle;
         }
 
         /* Tabla */
@@ -104,10 +104,10 @@
                 </div>
                 {% endif %}
 
-                {% if generated_img_b64 %}
+                {% if generated_img_url %}
                 <div class="image-container">
-                    <span class="img-label">✨ Recreación por IA <span class="generated-badge">Hugging Face</span></span>
-                    <img src="{{ generated_img_b64 }}" alt="Pingüino generado" class="result-image">
+                    <span class="img-label">✨ Recreación por IA <span class="generated-badge">Pollinations AI</span></span>
+                    <img src="{{ generated_img_url }}" alt="Pingüino generado" class="result-image">
                 </div>
                 {% endif %}
                 
