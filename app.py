@@ -24,13 +24,25 @@ co = cohere.ClientV2(api_key=cohere_api_key)
 
 app = Flask(__name__)
 
-client = MongoClient(mongo_uri, server_api=ServerApi('1'))
 
-if mongo_uri:
-    mongo_client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
-    db = mongo_client["Flask_ONNX"]
-    collection = db["Pinguinos"]
-    print("✅ Conectado a MongoDB")
+def get_db():
+    client = MongoClient(mongo_uri, server_api=ServerApi('1'))
+
+    try:
+
+        client.admin.command('ping')
+
+        print("Conexión con MongoDB exitosa")
+
+        return client['Flask_ONNX']
+
+    except Exception as e:
+
+        print(f"Error conectando a MongoDB: {e}")
+
+        raise
+
+db = None
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "penguins_rf.onnx")
@@ -182,6 +194,7 @@ def get_images(features, species):
     return image_url
     
 def post_mongo(features, species, adopt=0, img_url=None):
+    collection = db['Pinguinos']
     if not collection: 
         return
     doc = {
@@ -196,6 +209,15 @@ def post_mongo(features, species, adopt=0, img_url=None):
     }
     collection.insert_one(doc)
     print("💾 Guardado en Mongo")
+
+@app.before_request
+def connect_db():
+
+    global db
+
+    if db is None:
+        
+        db = get_db()
 
 @app.route("/", methods = ['GET']) #"/" --> endpoint
 def home():
