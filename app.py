@@ -5,8 +5,12 @@ import os
 import numpy as np
 import onnxruntime as ort
 import requests
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import certifi
 from urllib.parse import quote
 from dotenv import load_dotenv
+
 
 # leemos el .env
 from dotenv import load_dotenv
@@ -14,10 +18,19 @@ load_dotenv() # se le pone la ruta al .env
 
 # leer variable de entorno cohere_api_key
 cohere_api_key = os.getenv("COHERE_API_KEY")
+mongo_uri = os.getenv("MONGO_URI")
 
 co = cohere.ClientV2(api_key=cohere_api_key)
 
 app = Flask(__name__)
+
+client = MongoClient(mongo_uri, server_api=ServerApi('1'))
+
+if mongo_uri:
+    mongo_client = MongoClient(mongo_uri, tlsCAFile=certifi.where())
+    db = mongo_client["Flask_ONNX"]
+    collection = db["Pinguinos"]
+    print("✅ Conectado a MongoDB")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "penguins_rf.onnx")
@@ -168,7 +181,21 @@ def get_images(features, species):
     
     return image_url
     
-
+def post_mongo(features, species, adopt=0, img_url=None):
+    if not collection: 
+        return
+    doc = {
+        "species": species,
+        "bill_length_mm": features['bill_length_mm'],
+        "bill_depth_mm": features['bill_depth_mm'],
+        "flipper_length_mm": features['flipper_length_mm'],
+        "body_mass_g": features['bill_length_mm'],
+        "sex_num": features['bill_length_mm'],
+        "adopt": adopt,
+        "img_url": img_url,
+    }
+    collection.insert_one(doc)
+    print("💾 Guardado en Mongo")
 
 @app.route("/", methods = ['GET']) #"/" --> endpoint
 def home():
@@ -185,6 +212,7 @@ def predict():
     if img_url:
         print(f"Procesando la imagen")
         prediccion, features = get_features_from_image(img_url)
+        post_mongo(features, species, adopt=0, img_url=img_url)
         
     else:
         print("Procesando entrada manual.")
@@ -206,6 +234,7 @@ def predict():
             )
             if not img_gen:
                 img_gen = get_images(features, species)
+            post_mongo(features, species, adopt=0, img_url=img_gen)
 
     return render_template("index2.html", prediction= prediccion, features = features, img_url = img_url, img_gen=img_gen)
 

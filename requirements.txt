@@ -13,3 +13,4 @@ onnxmltools
 onnx
 onnxconverter-common
 Pillow
+pymongo
