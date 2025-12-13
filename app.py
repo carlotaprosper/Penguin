@@ -247,8 +247,8 @@ def post_mongo(features, species, adopt=0, img_url=None):
         "bill_length_mm": features['bill_length_mm'],
         "bill_depth_mm": features['bill_depth_mm'],
         "flipper_length_mm": features['flipper_length_mm'],
-        "body_mass_g": features['bill_length_mm'],
-        "sex_num": features['bill_length_mm'],
+        "body_mass_g": features['body_mass_g'],
+        "sex_num": features['sex_num'],
         "adopt": adopt,
         "img_url": img_url,
     }
