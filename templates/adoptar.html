@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Adoptar Pingüino</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f7fb; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        h1 { margin-top: 0; color: #223; }
+        .grid { display: flex; gap: 20px; align-items: flex-start; }
+        .img-wrap img { max-width: 260px; border-radius: 6px; }
+        form { flex: 1; }
+        label { display: block; margin: 10px 0 6px; font-weight: 600; color: #333; }
+        input[type="text"], input[type="email"], input[type="tel"], textarea {
+            width: 100%; padding: 10px; border: 1px solid #d6dbe6; border-radius: 6px; box-sizing: border-box;
+        }
+        button { background: #2e8b57; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; margin-top: 12px; }
+        .meta { color: #666; font-size: 0.95em; margin-top: 8px; }
+        .success { background: #e9f7ef; border-left: 4px solid #2e8b57; padding: 12px; border-radius: 4px; margin-top: 12px; }
+        .center { text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Adoptar un pingüino</h1>
+
+        {# Confirmation view after POST: template is rendered with 'nombre', 'img_url', 'nombre_penguin' #}
+        {% if nombre %}
+            <div class="success">
+                <h2>¡Gracias por tu adopción, {{ nombre }}!</h2>
+                <p>Has apadrinado a: <strong>{{ nombre_penguin }}</strong></p>
+                {% if img_url %}
+                    <div class="center">
+                        <img src="{{ img_url }}" alt="Imagen del pingüino" style="max-width:320px; border-radius:6px;">
+                    </div>
+                {% endif %}
+                <p class="meta">Hemos registrado tu pago correctamente. Te enviaremos un correo de confirmación a la dirección proporcionada.</p>
+            </div>
+
+            <p style="margin-top:16px;"><a href="{{ url_for('apadrinar') }}">Volver a la lista de pingüinos</a></p>
+
+        {% else %}
+            {# Form view: expects a 'penguin' object with fields like 'img_url', 'species', 'sex_num', 'adopt', '_id' #}
+            {% if penguin %}
+                <div class="grid">
+                    <div class="img-wrap">
+                        <img src="{{ penguin.img_url }}" alt="Imagen del pingüino">
+                        <p class="meta"><strong>Especie:</strong> {{ penguin.species }}<br>
+                        <strong>Sexo:</strong> {{ penguin.sex_num }}<br>
+                        <strong>Adoptado:</strong> {{ penguin.adopt }}</p>
+                    </div>
+
+                    <form method="post" action="{{ url_for('adoptar', id=penguin._id) }}">
+                        <label for="nombre">Tu nombre</label>
+                        <input id="nombre" name="nombre" type="text" required>
+
+                        <label for="email">Correo electrónico</label>
+                        <input id="email" name="email" type="email" required>
+
+                        <label for="tarjeta">Número de tarjeta (solo para demo)</label>
+                        <input id="tarjeta" name="tarjeta" type="text" inputmode="numeric" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+
+                        <label for="nombre_penguin">Nombre del pingüino (opcional)</label>
+                        <input id="nombre_penguin" name="nombre_penguin" type="text" placeholder="Dale un nombre a tu pingüino">
+
+                        <button type="submit">Confirmar adopción</button>
+                        <p class="meta">Se guardará la información en la base de datos. Este formulario es de demostración, no se procesa pago real.</p>
+                    </form>
+                </div>
+
+                <p style="margin-top:18px;"><a href="{{ url_for('apadrinar') }}">Volver a la lista</a></p>
+
+            {% else %}
+                <p>No se encontró el pingüino. Vuelve a la <a href="{{ url_for('apadrinar') }}">lista de adopciones</a>.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
