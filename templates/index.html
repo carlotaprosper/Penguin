@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Antártida te espera</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #e3f2fd; 
+            --dark-blue: #1b3b6f; 
+            --text-color: #37474f;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: flex-end;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark-blue);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover { transform: scale(1.05); }
+
+        .nav-pill {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* TAMAÑO CORREGIDO: BOLA MÁGICA 32px */
+        .magic-ball-img {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 5px rgba(41, 182, 246, 0.6));
+            object-fit: contain;
+        }
+
+        .nav-icon-top {
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+        }
+        
+        .rec-icon-container {
+            display: flex; align-items: center; gap: 5px; 
+            color: var(--dark-blue); margin-bottom: 8px; 
+            font-weight: bold; font-family: 'Oswald', sans-serif;
+        }
+
+        .igloo-btn {
+            color: var(--dark-blue);
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .hero-container {
+            display: flex; align-items: center; justify-content: center;
+            width: 90%; max-width: 1200px; gap: 60px; flex-wrap: wrap;
+        }
+
+        .image-card {
+            background-color: var(--dark-blue);
+            width: 450px; height: 450px;
+            border-radius: 50px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .circle-mask {
+            width: 380px; height: 380px;
+            border-radius: 50%; overflow: hidden;
+        }
+
+        .circle-mask img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-text {
+            flex: 1; min-width: 300px; text-align: left;
+        }
+
+        .hero-text h1 {
+            font-family: 'Oswald', sans-serif; font-size: 5rem;
+            color: var(--dark-blue); line-height: 0.9; margin: 0;
+            text-transform: uppercase; letter-spacing: -2px;
+        }
+
+        .hero-text p {
+            font-family: 'Roboto', sans-serif; font-size: 1.8rem;
+            color: #455a64; margin-top: 15px; font-weight: 300;
+        }
+        
+        @media (max-width: 1000px) {
+            header { position: relative; justify-content: center; }
+            .hero-text h1 { font-size: 3.5rem; text-align: center; }
+            .nav-buttons { gap: 15px; flex-wrap: wrap; }
+            .image-card { width: 300px; height: 300px; }
+            .circle-mask { width: 250px; height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-buttons">
+            <a href="/" class="nav-item">
+                <i class="fas fa-igloo igloo-btn"></i>
+            </a>
+
+            <a href="/predict" class="nav-item"> 
+                <img src="https://cdn-icons-png.flaticon.com/512/8331/8331106.png" class="magic-ball-img" alt="Bola Mágica">
+                <div class="nav-pill">PREDECIR</div>
+            </a>
+            
+            <a href="/apadrinar" class="nav-item">
+                <div class="rec-icon-container">
+                    <i class="fas fa-circle" style="font-size: 0.8rem;"></i> REC
+                </div>
+                <div class="nav-pill">HISTÓRICO</div>
+            </a>
+
+            <a href="/apadrinar" class="nav-item">
+                <i class="fas fa-heart nav-icon-top"></i>
+                <div class="nav-pill">APADRINAR</div>
+            </a>
+        </div>
+    </header>
+
+    <div class="hero-container">
+        <div class="image-card">
+            <div class="circle-mask">
+                <img src="https://images.unsplash.com/photo-1598439210625-5067c578f3f6?q=80&w=1000&auto=format&fit=crop" alt="Pingüinos">
+            </div>
+        </div>
+        <div class="hero-text">
+            <h1>LA ANTÁRTIDA<br>TE ESPERA</h1>
+            <p>Explora las maravillas</p>
+        </div>
+    </div>
+
+</body>
+</html>
