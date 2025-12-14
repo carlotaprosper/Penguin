@@ -1,0 +1,14 @@
+flask
+gunicorn
+pymongo
+python-dotenv
+matplotlib
+pandas
+numpy
+requests
+cohere
+onnxruntime
+onnxmltools
+onnx
+onnxconverter-common
+Pillow
