@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Antártida te espera</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #e3f2fd; 
+            --dark-blue: #1b3b6f; 
+            --text-color: #37474f;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            min-height: 100vh;
+            
+            /* Fondo con efecto hielo */
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at 50% 50%, #ffffff 0%, #e3f2fd 100%);
+            background-attachment: fixed;
+            position: relative; 
+            z-index: 1; 
+        }
+
+        /* --- EFECTO NIEVE CSS (CORREGIDO PARA VISIBILIDAD) --- */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; 
+            z-index: -1; 
+            overflow: hidden;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            /* CAMBIO: Color azul hielo en vez de blanco para que se vea */
+            background-color: #90caf9; 
+            border-radius: 50%;
+            opacity: 0.6; /* Un poco más de opacidad */
+            animation: fall linear infinite;
+            filter: drop-shadow(0 0 1px rgba(27, 59, 111, 0.2)); /* Sombra azulada */
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg); 
+                opacity: 0.2;
+            }
+        }
+        /* ------------------------ */
+
+
+        /* HEADER ABSOLUTO SOLO EN HOME */
+        header {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .header-content {
+            width: 95%;
+            max-width: var(--max-width);
+            display: flex;
+            justify-content: flex-end; 
+            align-items: center;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: flex-end;
+            gap: 30px; 
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark-blue);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .nav-item:hover { transform: scale(1.05); }
+
+        .nav-pill {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .magic-ball-img {
+            width: 32px; height: 32px; margin-bottom: 8px;
+            filter: drop-shadow(0 0 5px rgba(41, 182, 246, 0.6));
+            object-fit: contain;
+        }
+
+        .nav-icon-top { font-size: 1.8rem; color: var(--dark-blue); margin-bottom: 8px; }
+        
+        .rec-icon-container {
+            display: flex; align-items: center; gap: 5px; 
+            color: var(--dark-blue); margin-bottom: 8px; 
+            font-weight: bold; font-family: 'Oswald', sans-serif;
+        }
+
+        .igloo-btn { color: var(--dark-blue); font-size: 2rem; margin-bottom: 5px; }
+
+        /* HERO SECTION */
+        .hero-container {
+            display: flex; align-items: center; justify-content: center;
+            width: 90%; max-width: 1200px; gap: 60px; flex-wrap: wrap;
+            margin-top: 100px; 
+            margin-bottom: 60px;
+        }
+
+        .image-card {
+            background-color: var(--dark-blue);
+            width: 450px; height: 450px;
+            border-radius: 50px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .circle-mask {
+            width: 380px; height: 380px;
+            border-radius: 50%; overflow: hidden;
+        }
+
+        .circle-mask img { width: 100%; height: 100%; object-fit: cover; }
+
+        .hero-text { flex: 1; min-width: 300px; text-align: left; }
+
+        .hero-text h1 {
+            font-family: 'Oswald', sans-serif; font-size: 5rem;
+            color: var(--dark-blue); line-height: 0.9; margin: 0;
+            text-transform: uppercase; letter-spacing: -2px;
+        }
+
+        .hero-text p {
+            font-family: 'Roboto', sans-serif; font-size: 1.8rem;
+            color: #455a64; margin-top: 15px; font-weight: 300;
+        }
+
+        /* --- CARACTERÍSTICAS (FEATURES) --- */
+        .features {
+            display: flex; justify-content: center; gap: 20px; 
+            width: 95%; max-width: 1200px; 
+            margin-bottom: 80px; 
+            flex-wrap: wrap;
+        }
+        .feature-card {
+            background: white; padding: 30px; border-radius: 20px;
+            width: 220px; 
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            height: 100%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .feature-card:hover { transform: translateY(-10px); }
+        .feature-icon { font-size: 3rem; color: var(--dark-blue); margin-bottom: 15px; }
+        .feature-card h3 { font-family: 'Oswald', sans-serif; margin-bottom: 10px; color: var(--text-color); margin-top: 0; }
+        .feature-card p { font-size: 0.9rem; color: #666; margin: 0; line-height: 1.4; }
+
+        /* FOOTER */
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            margin-top: auto; 
+        }
+        footer a { color: #8ecae6; text-decoration: none; }
+        
+        @media (max-width: 1000px) {
+            header { position: relative; justify-content: center; padding: 20px; }
+            .hero-text h1 { font-size: 3.5rem; text-align: center; }
+            .nav-buttons { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .image-card { width: 300px; height: 300px; }
+            .circle-mask { width: 250px; height: 250px; }
+            .header-content { justify-content: center; }
+            .hero-container { margin-top: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="snow-container">
+        <div class="snowflake" style="left: 5%; width: 5px; height: 5px; animation-duration: 10s; animation-delay: 0s;"></div>
+        <div class="snowflake" style="left: 15%; width: 8px; height: 8px; animation-duration: 12s; animation-delay: 2s;"></div>
+        <div class="snowflake" style="left: 25%; width: 4px; height: 4px; animation-duration: 8s; animation-delay: 4s;"></div>
+        <div class="snowflake" style="left: 35%; width: 6px; height: 6px; animation-duration: 11s; animation-delay: 1s;"></div>
+        <div class="snowflake" style="left: 45%; width: 5px; height: 5px; animation-duration: 9s; animation-delay: 3s;"></div>
+        <div class="snowflake" style="left: 55%; width: 7px; height: 7px; animation-duration: 13s; animation-delay: 0s;"></div>
+        <div class="snowflake" style="left: 65%; width: 4px; height: 4px; animation-duration: 7s; animation-delay: 2s;"></div>
+        <div class="snowflake" style="left: 75%; width: 6px; height: 6px; animation-duration: 10s; animation-delay: 4s;"></div>
+        <div class="snowflake" style="left: 85%; width: 8px; height: 8px; animation-duration: 14s; animation-delay: 1s;"></div>
+        <div class="snowflake" style="left: 95%; width: 5px; height: 5px; animation-duration: 9s; animation-delay: 3s;"></div>
+        <div class="snowflake" style="left: 10%; width: 4px; height: 4px; animation-duration: 11s; animation-delay: 5s;"></div>
+        <div class="snowflake" style="left: 30%; width: 7px; height: 7px; animation-duration: 9s; animation-delay: 6s;"></div>
+        <div class="snowflake" style="left: 60%; width: 5px; height: 5px; animation-duration: 12s; animation-delay: 5s;"></div>
+        <div class="snowflake" style="left: 80%; width: 6px; height: 6px; animation-duration: 10s; animation-delay: 6s;"></div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="nav-buttons">
+                <a href="/" class="nav-item">
+                    <i class="fas fa-igloo igloo-btn"></i>
+                </a>
+
+                <a href="/predict" class="nav-item"> 
+                    <img src="https://cdn-icons-png.flaticon.com/512/8331/8331106.png" class="magic-ball-img" alt="Bola Mágica">
+                    <div class="nav-pill">PREDECIR</div>
+                </a>
+                
+                <a href="/historico" class="nav-item">
+                    <div class="rec-icon-container">
+                        <i class="fas fa-circle" style="font-size: 0.8rem;"></i> REC
+                    </div>
+                    <div class="nav-pill">HISTÓRICO</div>
+                </a>
+
+                <a href="/stats" class="nav-item">
+                    <i class="fas fa-chart-line nav-icon-top"></i>
+                    <div class="nav-pill">ESTADÍSTICAS</div>
+                </a>
+
+                <a href="/apadrinar" class="nav-item">
+                    <i class="fas fa-heart nav-icon-top"></i>
+                    <div class="nav-pill">APADRINAR</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero-container">
+        <div class="image-card">
+            <div class="circle-mask">
+                <img src="https://images.unsplash.com/photo-1598439210625-5067c578f3f6?q=80&w=1000&auto=format&fit=crop" alt="Pingüinos">
+            </div>
+        </div>
+        <div class="hero-text">
+            <h1>LA ANTÁRTIDA<br>TE ESPERA</h1>
+            <p>Explora las maravillas</p>
+        </div>
+    </div>
+
+    <div class="features">
+        <a href="/predict" style="text-decoration: none;">
+            <div class="feature-card">
+                <i class="fas fa-magic feature-icon"></i>
+                <h3>Predicción IA</h3>
+                <p>Descubre la especie de un pingüino basándote en sus medidas físicas.</p>
+            </div>
+        </a>
+
+        <a href="/historico" style="text-decoration: none;">
+            <div class="feature-card">
+                <i class="fas fa-history feature-icon"></i>
+                <h3>Histórico</h3>
+                <p>Consulta el registro completo de todas las predicciones realizadas.</p>
+            </div>
+        </a>
+
+        <a href="/stats" style="text-decoration: none;">
+            <div class="feature-card">
+                <i class="fas fa-chart-pie feature-icon"></i>
+                <h3>Datos Reales</h3>
+                <p>Analiza estadísticas detalladas sobre la población de la Isla Palmer.</p>
+            </div>
+        </a>
+
+        <a href="/apadrinar" style="text-decoration: none;">
+            <div class="feature-card">
+                <i class="fas fa-hand-holding-heart feature-icon"></i>
+                <h3>Apadrina</h3>
+                <p>Ayuda a la conservación adoptando simbólicamente a un pingüino.</p>
+            </div>
+        </a>
+    </div>
+
+</body>
+<footer>
+    <p>© 2024 Proyecto Pingüinos Antártida | Hecho con <i class="fas fa-heart"></i> y Python</p>
+</footer>
+</html>
