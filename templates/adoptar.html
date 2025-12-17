@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Adoptar Pingüino</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #e3f2fd;
+            --dark-blue: #1b3b6f;
+            --text-color: #37474f;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%; 
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .header-content {
+            width: 95%;
+            max-width: var(--max-width);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1.header-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--dark-blue);
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1;
+            text-align: left;
+        }
+
+        .nav-buttons { display: flex; align-items: flex-end; gap: 30px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--dark-blue); cursor: pointer; transition: transform 0.2s; }
+        .nav-item:hover { transform: scale(1.05); }
+
+        .nav-pill {
+            background-color: var(--dark-blue); color: white;
+            padding: 8px 25px; border-radius: 20px;
+            font-size: 0.9rem; font-weight: bold; font-family: 'Oswald', sans-serif;
+            text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 1px; white-space: nowrap;
+        }
+
+        .nav-pill.active {
+            background-color: white; color: var(--dark-blue);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .magic-ball-img { width: 32px; height: 32px; margin-bottom: 8px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)); object-fit: contain; }
+        .nav-icon-top { font-size: 1.8rem; color: var(--dark-blue); margin-bottom: 8px; }
+        .igloo-btn { color: var(--dark-blue); font-size: 2rem; margin-bottom: 5px; }
+        .rec-icon-container { display: flex; align-items: center; gap: 5px; color: var(--dark-blue); margin-bottom: 8px; font-weight: bold; font-family: 'Oswald', sans-serif; }
+
+        .main-container {
+            width: 95%; 
+            max-width: var(--max-width);
+            margin-top: 20px; 
+            margin-bottom: 50px;
+        }
+
+        /* --- GRID --- */
+        .adoption-grid {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .left-col { flex: 0 0 350px; text-align: center; }
+        .right-col { flex: 1; min-width: 300px; }
+
+        .penguin-photo {
+            width: 100%; height: auto; border-radius: 10px;
+            border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .penguin-details {
+            font-family: 'Oswald', sans-serif; color: #333;
+            font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px;
+        }
+
+        .back-btn {
+            background-color: var(--dark-blue); color: white;
+            text-decoration: none; padding: 12px 30px;
+            border-radius: 50px; font-family: 'Oswald', sans-serif;
+            font-size: 1rem; display: inline-block; transition: background 0.3s;
+        }
+        .back-btn:hover { background-color: #2c5282; }
+
+        form { display: flex; flex-direction: column; }
+
+        label {
+            font-family: 'Oswald', sans-serif; font-size: 1.2rem;
+            color: black; margin-bottom: 8px; margin-top: 20px; font-weight: bold;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 100%; padding: 12px 20px;
+            border: 2px solid #cfd8dc; border-radius: 50px;
+            background: #f0f4f8; font-family: 'Roboto', sans-serif;
+            font-size: 1rem; outline: none; box-sizing: border-box;
+            transition: border 0.3s;
+        }
+
+        input:focus { border-color: var(--dark-blue); background: white; }
+
+        .confirm-btn {
+            background-color: var(--dark-blue); color: white;
+            border: none; padding: 15px 30px; border-radius: 50px;
+            font-family: 'Oswald', sans-serif; font-size: 1.1rem;
+            cursor: pointer; margin-top: 30px; align-self: flex-start;
+            transition: background 0.3s;
+        }
+        .confirm-btn:hover { background-color: #2c5282; }
+
+        .disclaimer { font-size: 0.8rem; color: #666; margin-top: 15px; font-weight: bold; }
+
+        .success-box {
+            background: white; padding: 40px; border-radius: 20px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .success-title {
+            text-align: center; margin-bottom: 20px;
+            font-family: 'Oswald', sans-serif; color: var(--dark-blue);
+            font-size: 2.5rem; text-transform: uppercase;
+        }
+
+        @media (max-width: 1100px) {
+            .header-content { flex-direction: column; gap: 20px; }
+            .nav-buttons { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            h1.header-title { text-align: center; font-size: 3rem; margin-bottom: 10px; }
+            .adoption-grid { flex-direction: column; align-items: center; }
+            .left-col { width: 100%; flex: auto; }
+            .right-col { width: 100%; }
+        }
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            margin-top: auto; /* Esto empuja el footer al fondo si hay poco contenido */
+        }
+        footer a { color: #8ecae6; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">ADOPTAR PINGÜINO</h1>
+
+            <div class="nav-buttons">
+                <a href="/" class="nav-item">
+                    <i class="fas fa-igloo igloo-btn"></i>
+                </a>
+
+                <a href="/predict" class="nav-item"> 
+                    <img src="https://cdn-icons-png.flaticon.com/512/8331/8331106.png" class="magic-ball-img" alt="Bola Mágica">
+                    <div class="nav-pill">PREDECIR</div>
+                </a>
+                
+                <a href="/historico" class="nav-item">
+                    <div class="rec-icon-container">
+                        <i class="fas fa-circle" style="font-size: 0.8rem;"></i> REC
+                    </div>
+                    <div class="nav-pill">HISTÓRICO</div>
+                </a>
+
+                <a href="/stats" class="nav-item">
+                    <i class="fas fa-chart-line nav-icon-top"></i>
+                    <div class="nav-pill">ESTADÍSTICAS</div>
+                </a>
+
+                <a href="/apadrinar" class="nav-item">
+                    <i class="fas fa-heart nav-icon-top"></i>
+                    <div class="nav-pill active">APADRINAR</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        {% if nombre %}
+            <div class="success-box">
+                <h2 class="success-title">¡Adopción Confirmada! 🐧</h2>
+                <h3 style="color: var(--dark-blue); font-family: 'Oswald', sans-serif;">¡Gracias, {{ nombre }}!</h3>
+                <p style="font-size: 1.2rem;">Has apadrinado exitosamente a: <strong>{{ nombre_penguin }}</strong></p>
+                
+                {% if img_url %}
+                    <img src="{{ img_url }}" alt="Tu Pingüino" style="max-width: 300px; border-radius: 15px; margin: 20px 0; border: 5px solid #e3f2fd;">
+                {% endif %}
+                
+                <p style="color: #666;">Hemos registrado tu pago simulado. Tu certificado está listo.</p>
+                
+                <div style="margin-top: 30px;">
+                    <a href="{{ url_for('apadrinar') }}" class="back-btn">VOLVER A LA LISTA</a>
+                </div>
+            </div>
+
+        {% else %}
+            {% if penguin %}
+            <div class="adoption-grid">
+                
+                <div class="left-col">
+                    <img src="{{ penguin.img_url }}" alt="Pingüino a adoptar" class="penguin-photo">
+                    
+                    <div class="penguin-details">
+                        Especie: <strong>{{ penguin.species|upper }}</strong><br>
+                        Sexo: {{ penguin.sex_num }}<br>
+                        Adoptado: {{ penguin.adopt }}
+                    </div>
+
+                    <a href="{{ url_for('apadrinar') }}" class="back-btn">VOLVER A LA LISTA</a>
+                </div>
+
+                <div class="right-col">
+                    <form method="post" action="{{ url_for('adoptar', id=penguin._id) }}">
+                        
+                        <label for="nombre">Tu nombre:</label>
+                        <input id="nombre" name="nombre" type="text" placeholder="Ej: Juan Pérez" required>
+
+                        <label for="email">Correo electrónico:</label>
+                        <input id="email" name="email" type="email" placeholder="Ej: juan@email.com" required>
+
+                        <label for="tarjeta">Número de tarjeta (solo para demo):</label>
+                        <input id="tarjeta" name="tarjeta" type="text" inputmode="numeric" placeholder="XXXX-XXXX-XXXX-XXXX" required>
+
+                        <label for="nombre_penguin">Nombre del pingüino (opcional):</label>
+                        <input id="nombre_penguin" name="nombre_penguin" type="text" placeholder="Dale un nombre a tu nuevo amigo...">
+
+                        <button type="submit" class="confirm-btn">CONFIRMAR ADOPCIÓN</button>
+                        
+                        <p class="disclaimer">SE GUARDARÁ LA INFORMACIÓN EN LA BASE DE DATOS. ESTE FORMULARIO ES DE DEMOSTRACIÓN, NO SE PROCESA PAGO REAL.</p>
+                    </form>
+                </div>
+
+            </div>
+            {% else %}
+                <p>No se encontró el pingüino. <a href="{{ url_for('apadrinar') }}">Volver atrás</a>.</p>
+            {% endif %}
+
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>© 2024 Proyecto Pingüinos Antártida | Hecho con <i class="fas fa-heart"></i> y Python</p>
+    </footer>
+    <style>
+        /* Estilo del botón flotante */
+        .music-control-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-blue);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 9999; /* Muy alto para estar siempre encima */
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .music-control-btn:hover {
+            transform: scale(1.1);
+            background-color: #2c5282;
+        }
+
+        .music-control-btn i { font-size: 1.2rem; }
+        
+        @media (max-width: 600px) {
+            .music-control-btn { bottom: 20px; right: 20px; }
+        }
+    </style>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/background.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <audio id="click-sound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle" class="music-control-btn" title="Silenciar / Activar">
+        <i class="fas fa-volume-mute"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bgMusic = document.getElementById("bg-music");
+            const clickSound = document.getElementById("click-sound");
+            const musicBtn = document.getElementById("music-toggle");
+            const musicIcon = musicBtn.querySelector("i");
+
+            // --- CONFIGURACIÓN ---
+            bgMusic.volume = 0.3;       // Volumen música (0.0 a 1.0)
+            clickSound.volume = 0.8;    // Volumen clic (más alto para que se oiga bien)
+
+            // --- 1. RECUPERAR ESTADO (MUTE Y TIEMPO) ---
+            const isMuted = localStorage.getItem('musicMuted') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            // Aplicar tiempo guardado inmediatamente
+            bgMusic.currentTime = savedTime;
+            bgMusic.muted = isMuted;
+
+            // Actualizar icono visualmente
+            updateIcon(isMuted);
+
+            // --- 2. LOGICA DE REPRODUCCIÓN ---
+            if (!isMuted) {
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        console.log("Autoplay bloqueado. Esperando interacción...");
+                        // Si falla, esperamos al primer clic en cualquier sitio
+                        document.body.addEventListener('click', () => {
+                            bgMusic.play();
+                        }, { once: true });
+                    });
+                }
+            }
+
+            // --- 3. GUARDAR TIEMPO ANTES DE SALIR ---
+            // Esto es lo que hace la "magia" de continuar la canción
+            window.addEventListener("beforeunload", () => {
+                localStorage.setItem('musicTime', bgMusic.currentTime);
+            });
+
+            // --- 4. BOTÓN DE SILENCIO ---
+            musicBtn.addEventListener("click", (e) => {
+                e.stopPropagation(); // Evita que suene el clic al pulsar este botón
+                const newState = !bgMusic.muted;
+                bgMusic.muted = newState;
+                localStorage.setItem('musicMuted', newState);
+                updateIcon(newState);
+
+                if (!newState) bgMusic.play(); // Forzar play si se desmutea
+            });
+
+            function updateIcon(muted) {
+                if (muted) {
+                    musicIcon.className = 'fas fa-volume-mute';
+                } else {
+                    musicIcon.className = 'fas fa-volume-up';
+                }
+            }
+
+            // --- 5. SONIDO DE CLIC CON RETRASO (PARA QUE SE OIGA) ---
+            // Seleccionamos todo lo clicable
+            const interactiveElements = document.querySelectorAll("a, button, .nav-item, .card, .feature-card, .action-btn, input, select");
+
+            interactiveElements.forEach(el => {
+                el.addEventListener("click", function(e) {
+                    // Solo reproducir si no estamos muteados (opcional, quita el if si quieres que suenen siempre)
+                    // clickSound.currentTime = 0;
+                    // clickSound.play();
+
+                    // Si es un enlace que navega a otra página, necesitamos retrasarlo un poco
+                    // para que dé tiempo a oír el sonido.
+                    const href = this.getAttribute("href");
+                    const isLink = this.tagName === 'A' || this.closest('a');
+                    
+                    // Reproducimos el sonido siempre
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(() => {}); // Catch por si el navegador bloquea sonidos rápidos
+
+                    // Si es un enlace interno, esperamos 200ms antes de cambiar de página
+                    if (isLink && href && !href.startsWith("#") && !href.startsWith("javascript")) {
+                        e.preventDefault(); // Paramos la navegación instantánea
+                        const targetUrl = isLink.href || href;
+                        
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 300); // 300 milisegundos de espera
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
