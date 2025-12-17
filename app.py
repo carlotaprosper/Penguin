@@ -16,7 +16,6 @@ import requests
 import cohere
 import pickle
 import random
-import base64
 import json
 import os
 
@@ -259,15 +258,6 @@ def post_mongo(features, species, adopt=0, img_url=None):
     }
     collection.insert_one(doc)
     print("💾 Guardado en Mongo")
-
-#función para pasar figuras a imagen        
-def fig_to_base64(fig):
-    buf = BytesIO()
-    fig.savefig(buf, format="png")
-    buf.seek(0)
-    img_base64 = base64.b64encode(buf.getvalue()).decode("utf-8")
-    plt.close(fig)
-    return img_base64
 
 @app.before_request
 def connect_db():
