@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Certificado de Apadrinamiento</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #e3f2fd;
+            --dark-blue: #1b3b6f;
+            --text-color: #37474f;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%; 
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .header-content {
+            width: 95%;
+            max-width: var(--max-width);
+            display: flex;
+            justify-content: flex-end; /* En certificado no suele haber título H1 en el header */
+            align-items: center;
+        }
+
+        .nav-buttons { display: flex; align-items: flex-end; gap: 30px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--dark-blue); cursor: pointer; transition: transform 0.2s; }
+        .nav-item:hover { transform: scale(1.05); }
+
+        .nav-pill {
+            background-color: var(--dark-blue); color: white;
+            padding: 8px 25px; border-radius: 20px;
+            font-size: 0.9rem; font-weight: bold; font-family: 'Oswald', sans-serif;
+            text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 1px; white-space: nowrap;
+        }
+
+        .magic-ball-img { width: 32px; height: 32px; margin-bottom: 8px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)); object-fit: contain; }
+        .nav-icon-top { font-size: 1.8rem; color: var(--dark-blue); margin-bottom: 8px; }
+        .igloo-btn { color: var(--dark-blue); font-size: 2rem; margin-bottom: 5px; }
+        .rec-icon-container { display: flex; align-items: center; gap: 5px; color: var(--dark-blue); margin-bottom: 8px; font-weight: bold; font-family: 'Oswald', sans-serif; }
+
+        /* --- CERTIFICADO --- */
+        .cert-wrapper {
+            margin-top: 20px; margin-bottom: 40px; position: relative;
+            width: 90%; max-width: 1000px;
+        }
+
+        .certificate {
+            background-color: white; border: 15px solid #8ecae6;
+            padding: 5px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative; overflow: hidden;
+        }
+
+        .cert-inner-border {
+            border: 2px solid var(--dark-blue); padding: 40px; position: relative;
+            background: radial-gradient(circle at center, rgba(255,255,255,0) 50%, rgba(27, 59, 111, 0.03) 100%);
+        }
+
+        .flag-ribbon {
+            position: absolute; top: -50px; left: -50px; width: 150px; height: 150px;
+            background: linear-gradient(135deg, #AA151B 0%, #AA151B 33%, #F1BF00 33%, #F1BF00 66%, #AA151B 66%, #AA151B 100%);
+            transform: rotate(-45deg); box-shadow: 0 5px 10px rgba(0,0,0,0.2); z-index: 1;
+        }
+
+        .logo-army { position: absolute; top: 30px; right: 40px; width: 80px; height: auto; object-fit: contain; }
+        .logo-spain { position: absolute; bottom: 30px; left: 40px; width: 60px; height: auto; opacity: 0.9; }
+
+        .cert-header { text-align: center; margin-bottom: 40px; margin-top: 20px; }
+        .cert-title-small { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--dark-blue); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        .cert-title-main { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #000; font-weight: 700; margin: 0; }
+
+        .cert-body { display: flex; justify-content: space-between; align-items: center; gap: 40px; margin-bottom: 40px; position: relative; z-index: 2; }
+        .cert-text { flex: 1; font-family: 'Playfair Display', serif; font-size: 1.2rem; line-height: 1.8; color: #333; text-align: left; }
+        .cert-text strong { font-family: 'Oswald', sans-serif; color: var(--dark-blue); font-size: 1.3rem; text-transform: uppercase; }
+
+        .cert-photo-frame {
+            flex: 0 0 300px; padding: 10px; background: white;
+            border: 1px solid #ddd; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+            transform: rotate(2deg);
+        }
+        .cert-photo { width: 100%; height: auto; display: block; }
+
+        .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 50px; padding-bottom: 20px; }
+        .signature-block { text-align: center; margin-left: 100px; }
+        .signature-text { font-family: 'Pinyon Script', cursive; font-size: 3rem; color: var(--dark-blue); margin-bottom: -10px; }
+        .location-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: #666; border-top: 1px solid #999; padding-top: 5px; width: 300px; margin: 0 auto; }
+        
+        .reg-number { text-align: right; font-family: 'Oswald', sans-serif; color: var(--dark-blue); margin-right: 20px; }
+        .reg-label { font-size: 0.9rem; color: #666; text-transform: uppercase; }
+        .reg-value { font-size: 1.5rem; font-weight: bold; }
+
+        .actions { margin-top: 20px; display: flex; gap: 20px; }
+        .action-btn {
+            background-color: var(--dark-blue); color: white; border: none;
+            padding: 12px 30px; border-radius: 5px; font-family: 'Roboto', sans-serif;
+            font-weight: bold; font-size: 1rem; cursor: pointer; text-decoration: none;
+            transition: background 0.3s;
+        }
+        .action-btn:hover { background-color: #2c5282; }
+
+        @media print {
+            header, .actions { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .cert-wrapper { width: 100%; max-width: 100%; margin: 0; box-shadow: none; }
+            .certificate { border: 5px solid #8ecae6; }
+            .cert-inner-border { border: 1px solid #1b3b6f; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @media (max-width: 850px) {
+            header { justify-content: center; padding: 10px; }
+            .nav-buttons { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            .header-content { justify-content: center; }
+            .cert-body { flex-direction: column-reverse; text-align: center; }
+            .cert-text { text-align: center; }
+            .cert-photo-frame { transform: rotate(0deg); width: 80%; }
+            .cert-footer { flex-direction: column; gap: 30px; align-items: center; }
+            .signature-block { margin-left: 0; }
+            .reg-number { text-align: center; margin-right: 0; }
+            .logo-army { width: 60px; top: 20px; right: 20px; }
+        }
+
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            margin-top: auto; /* Esto empuja el footer al fondo si hay poco contenido */
+        }
+        footer a { color: #8ecae6; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="nav-buttons">
+                <a href="/" class="nav-item">
+                    <i class="fas fa-igloo igloo-btn"></i>
+                </a>
+
+                <a href="/predict" class="nav-item"> 
+                    <img src="https://cdn-icons-png.flaticon.com/512/8331/8331106.png" class="magic-ball-img" alt="Bola Mágica">
+                    <div class="nav-pill">PREDECIR</div>
+                </a>
+                
+                <a href="/historico" class="nav-item">
+                    <div class="rec-icon-container">
+                        <i class="fas fa-circle" style="font-size: 0.8rem;"></i> REC
+                    </div>
+                    <div class="nav-pill">HISTÓRICO</div>
+                </a>
+
+                <a href="/stats" class="nav-item">
+                    <i class="fas fa-chart-line nav-icon-top"></i>
+                    <div class="nav-pill">ESTADÍSTICAS</div>
+                </a>
+
+                <a href="/apadrinar" class="nav-item">
+                    <i class="fas fa-heart nav-icon-top"></i>
+                    <div class="nav-pill">APADRINAR</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="cert-wrapper">
+        <div class="certificate">
+            <div class="cert-inner-border">
+                
+                <div class="flag-ribbon"></div>
+
+                <img src="https://tribunabenemerita.es/images/FOTOS_ARTICULOS_/2022/ejercito_la_fuerza_de_los_valores.png" class="logo-army" alt="Ejército de Tierra">
+
+                <img src="https://www.pikpng.com/pngl/b/381-3816013_escudo-actual-de-espaa-symbol-on-the-spain.png" class="logo-spain" alt="Escudo España">
+
+                <div class="cert-header">
+                    <div class="cert-title-small">El Oficial de Medio Ambiente de la</div>
+                    <div class="cert-title-main">XXXV Campaña Antártica certifica</div>
+                </div>
+
+                <div class="cert-body">
+                    <div class="cert-text">
+                        <p>Que el pingüino que aparece en la fotografía vive en la pingüinera de <strong>Punta Descubierta</strong></p>
+                        <p>y que ha sido apadrinado por <br> <strong style="font-size: 1.8rem; color: #1b3b6f;">{{ adopter_name }}</strong></p>
+                        
+                        <p>Le ha puesto el nombre de: <br> <strong style="font-size: 1.8rem;">{{ penguin_name }}</strong></p>
+
+                        <p style="font-size: 0.9rem; margin-top: 20px; font-style: italic;">
+                            Que conste que con este apadrinamiento se compromete a esforzarse todo lo posible en cuidar el planeta y así ayudar a su pingüino para que el próximo verano austral pueda regresar a la Isla Decepción.
+                        </p>
+                    </div>
+
+                    <div class="cert-photo-frame">
+                        {% if penguin_img %}
+                        <img src="{{ penguin_img }}" alt="Pingüino Apadrinado" class="cert-photo">
+                        {% else %}
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/South_Shetland-2016-Deception_Island%E2%80%93Chinstrap_penguin_%28Pygoscelis_antarctica%29_04.jpg" alt="Pingüino Default" class="cert-photo">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="cert-footer">
+                    <div class="signature-block">
+                        <div class="location-text">Isla Decepción a {{ issued }}</div>
+                        <div class="signature-text">Comandante A.</div>
+                        <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Jefe de la Base Gabriel de Castilla</div>
+                    </div>
+
+                    <div class="reg-number">
+                        <div class="reg-label">Número de Registro</div>
+                        <div class="reg-value">915{{ payment_id[-4:] }}</div> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="action-btn" onclick="window.print()">
+            <i class="fas fa-print"></i> Imprimir Certificado
+        </button>
+        
+        <a href="/" class="action-btn">
+            Volver al inicio
+        </a>
+    </div>
+
+    <footer>
+        <p>© 2024 Proyecto Pingüinos Antártida | Hecho con <i class="fas fa-heart"></i> y Python</p>
+    </footer>
+    <style>
+        /* Estilo del botón flotante */
+        .music-control-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-blue);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 9999; /* Muy alto para estar siempre encima */
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .music-control-btn:hover {
+            transform: scale(1.1);
+            background-color: #2c5282;
+        }
+
+        .music-control-btn i { font-size: 1.2rem; }
+        
+        @media (max-width: 600px) {
+            .music-control-btn { bottom: 20px; right: 20px; }
+        }
+    </style>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/background.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <audio id="click-sound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle" class="music-control-btn" title="Silenciar / Activar">
+        <i class="fas fa-volume-mute"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bgMusic = document.getElementById("bg-music");
+            const clickSound = document.getElementById("click-sound");
+            const musicBtn = document.getElementById("music-toggle");
+            const musicIcon = musicBtn.querySelector("i");
+
+            // --- CONFIGURACIÓN ---
+            bgMusic.volume = 0.3;
+            clickSound.volume = 0.8;
+
+            // --- 1. RECUPERAR ESTADO (MUTE Y TIEMPO) ---
+            const isMuted = localStorage.getItem('musicMuted') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            bgMusic.currentTime = savedTime;
+            bgMusic.muted = isMuted;
+            updateIcon(isMuted);
+
+            // --- 2. LOGICA DE REPRODUCCIÓN ---
+            if (!isMuted) {
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        console.log("Autoplay bloqueado. Esperando interacción...");
+                        document.body.addEventListener('click', () => {
+                            bgMusic.play();
+                        }, { once: true });
+                    });
+                }
+            }
+
+            // --- 3. GUARDAR TIEMPO ANTES DE SALIR ---
+            window.addEventListener("beforeunload", () => {
+                localStorage.setItem('musicTime', bgMusic.currentTime);
+            });
+
+            // --- 4. BOTÓN DE SILENCIO ---
+            musicBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const newState = !bgMusic.muted;
+                bgMusic.muted = newState;
+                localStorage.setItem('musicMuted', newState);
+                updateIcon(newState);
+                if (!newState) bgMusic.play();
+            });
+
+            function updateIcon(muted) {
+                if (muted) {
+                    musicIcon.className = 'fas fa-volume-mute';
+                } else {
+                    musicIcon.className = 'fas fa-volume-up';
+                }
+            }
+
+            // --- 5. SONIDO DE CLIC (SOLO BOTONES PRINCIPALES) ---
+            
+            // >>> CORRECCIÓN AQUÍ: Solo seleccionamos el menú y las tarjetas de la home <<<
+            const interactiveElements = document.querySelectorAll(".nav-item, .feature-card");
+
+            interactiveElements.forEach(el => {
+                el.addEventListener("click", function(e) {
+                    // Buscar el enlace real (por si clicamos en el icono dentro del botón)
+                    const linkElement = this.tagName === 'A' ? this : this.closest('a');
+                    const href = linkElement ? linkElement.getAttribute("href") : null;
+                    
+                    // Reproducir sonido
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(() => {});
+
+                    // Si es un enlace interno, pausamos 300ms para oír el sonido antes de irnos
+                    if (linkElement && href && !href.startsWith("#") && !href.startsWith("javascript")) {
+                        e.preventDefault(); 
+                        const targetUrl = linkElement.href;
+                        
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 300); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

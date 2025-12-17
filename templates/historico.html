@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pingüinos</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #e3f2fd;
+            --dark-blue: #1b3b6f;
+            --table-header: #1b3b6f;
+            --table-row-even: #f4faff;
+            --text-color: #37474f;
+            --max-width: 1200px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- HEADER --- */
+        header {
+            width: 100%; 
+            padding: 20px 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .header-content {
+            width: 95%;
+            max-width: var(--max-width);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1.header-title {
+            font-family: 'Oswald', sans-serif;
+            color: var(--dark-blue);
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1;
+            text-align: left;
+        }
+
+        .nav-buttons { display: flex; align-items: flex-end; gap: 30px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--dark-blue); cursor: pointer; transition: transform 0.2s; }
+        .nav-item:hover { transform: scale(1.05); }
+
+        .nav-pill {
+            background-color: var(--dark-blue); color: white;
+            padding: 8px 25px; border-radius: 20px;
+            font-size: 0.9rem; font-weight: bold; font-family: 'Oswald', sans-serif;
+            text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            letter-spacing: 1px; white-space: nowrap;
+        }
+
+        .nav-pill.active {
+            background-color: white; color: var(--dark-blue);
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .magic-ball-img { width: 32px; height: 32px; margin-bottom: 8px; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8)); object-fit: contain; }
+        .nav-icon-top { font-size: 1.8rem; color: var(--dark-blue); margin-bottom: 8px; }
+        .igloo-btn { color: var(--dark-blue); font-size: 2rem; margin-bottom: 5px; }
+        .rec-icon-container { display: flex; align-items: center; gap: 5px; color: var(--dark-blue); margin-bottom: 8px; font-weight: bold; font-family: 'Oswald', sans-serif; }
+
+        .main-container {
+            width: 95%;
+            max-width: var(--max-width);
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: center; }
+
+        th {
+            background-color: var(--table-header);
+            color: white;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            padding: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        td {
+            padding: 20px;
+            border-bottom: 1px solid #d0e1f0;
+            border-right: 1px solid #d0e1f0;
+            color: var(--text-color);
+            vertical-align: middle;
+            font-size: 1rem;
+        }
+
+        td:last-child, th:last-child { border-right: none; }
+        tr:nth-child(even) { background-color: var(--table-row-even); }
+        tr:hover { background-color: #e1f5fe; }
+
+        @media (max-width: 1100px) {
+            .header-content { flex-direction: column; gap: 20px; }
+            .nav-buttons { gap: 15px; flex-wrap: wrap; justify-content: center; }
+            h1.header-title { text-align: center; font-size: 3rem; margin-bottom: 10px; }
+            .table-container { overflow-x: auto; }
+            th, td { padding: 15px; white-space: nowrap; }
+        }
+
+        footer {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--dark-blue);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            margin-top: auto; /* Esto empuja el footer al fondo si hay poco contenido */
+        }
+        footer a { color: #8ecae6; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1 class="header-title">HISTÓRICO</h1>
+
+            <div class="nav-buttons">
+                <a href="/" class="nav-item">
+                    <i class="fas fa-igloo igloo-btn"></i>
+                </a>
+
+                <a href="/predict" class="nav-item"> 
+                    <img src="https://cdn-icons-png.flaticon.com/512/8331/8331106.png" class="magic-ball-img" alt="Bola Mágica">
+                    <div class="nav-pill">PREDECIR</div>
+                </a>
+                
+                <a href="/historico" class="nav-item">
+                    <div class="rec-icon-container">
+                        <i class="fas fa-circle" style="font-size: 0.8rem;"></i> REC
+                    </div>
+                    <div class="nav-pill active">HISTÓRICO</div>
+                </a>
+
+                <a href="/stats" class="nav-item">
+                    <i class="fas fa-chart-line nav-icon-top"></i>
+                    <div class="nav-pill">ESTADÍSTICAS</div>
+                </a>
+
+                <a href="/apadrinar" class="nav-item">
+                    <i class="fas fa-heart nav-icon-top"></i>
+                    <div class="nav-pill">APADRINAR</div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        {% if history %}
+                            {% for key in history[0].keys() %}
+                                <th>{{ key.replace('_', ' ').upper() }}</th>
+                            {% endfor %}
+                        {% else %}
+                            <th>ESTADO</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if history %}
+                        {% for record in history %}
+                        <tr>
+                            {% for value in record.values() %}
+                                <td>{{ value }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="100%" style="padding: 40px;">No hay datos registrados todavía.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Proyecto Pingüinos Antártida | Hecho con <i class="fas fa-heart"></i> y Python</p>
+    </footer>
+    <style>
+        /* Estilo del botón flotante */
+        .music-control-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--dark-blue);
+            color: white;
+            border-radius: 50%;
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 9999; /* Muy alto para estar siempre encima */
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .music-control-btn:hover {
+            transform: scale(1.1);
+            background-color: #2c5282;
+        }
+
+        .music-control-btn i { font-size: 1.2rem; }
+        
+        @media (max-width: 600px) {
+            .music-control-btn { bottom: 20px; right: 20px; }
+        }
+    </style>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="{{ url_for('static', filename='sounds/background.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <audio id="click-sound" preload="auto">
+        <source src="{{ url_for('static', filename='sounds/click.mp3') }}" type="audio/mpeg">
+    </audio>
+
+    <div id="music-toggle" class="music-control-btn" title="Silenciar / Activar">
+        <i class="fas fa-volume-mute"></i>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bgMusic = document.getElementById("bg-music");
+            const clickSound = document.getElementById("click-sound");
+            const musicBtn = document.getElementById("music-toggle");
+            const musicIcon = musicBtn.querySelector("i");
+
+            // --- CONFIGURACIÓN ---
+            bgMusic.volume = 0.3;
+            clickSound.volume = 0.8;
+
+            // --- 1. RECUPERAR ESTADO (MUTE Y TIEMPO) ---
+            const isMuted = localStorage.getItem('musicMuted') === 'true';
+            const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+            bgMusic.currentTime = savedTime;
+            bgMusic.muted = isMuted;
+            updateIcon(isMuted);
+
+            // --- 2. LOGICA DE REPRODUCCIÓN ---
+            if (!isMuted) {
+                let playPromise = bgMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        console.log("Autoplay bloqueado. Esperando interacción...");
+                        document.body.addEventListener('click', () => {
+                            bgMusic.play();
+                        }, { once: true });
+                    });
+                }
+            }
+
+            // --- 3. GUARDAR TIEMPO ANTES DE SALIR ---
+            window.addEventListener("beforeunload", () => {
+                localStorage.setItem('musicTime', bgMusic.currentTime);
+            });
+
+            // --- 4. BOTÓN DE SILENCIO ---
+            musicBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const newState = !bgMusic.muted;
+                bgMusic.muted = newState;
+                localStorage.setItem('musicMuted', newState);
+                updateIcon(newState);
+                if (!newState) bgMusic.play();
+            });
+
+            function updateIcon(muted) {
+                if (muted) {
+                    musicIcon.className = 'fas fa-volume-mute';
+                } else {
+                    musicIcon.className = 'fas fa-volume-up';
+                }
+            }
+
+            // --- 5. SONIDO DE CLIC (SOLO BOTONES PRINCIPALES) ---
+            
+            // >>> CORRECCIÓN AQUÍ: Solo seleccionamos el menú y las tarjetas de la home <<<
+            const interactiveElements = document.querySelectorAll(".nav-item, .feature-card");
+
+            interactiveElements.forEach(el => {
+                el.addEventListener("click", function(e) {
+                    // Buscar el enlace real (por si clicamos en el icono dentro del botón)
+                    const linkElement = this.tagName === 'A' ? this : this.closest('a');
+                    const href = linkElement ? linkElement.getAttribute("href") : null;
+                    
+                    // Reproducir sonido
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(() => {});
+
+                    // Si es un enlace interno, pausamos 300ms para oír el sonido antes de irnos
+                    if (linkElement && href && !href.startsWith("#") && !href.startsWith("javascript")) {
+                        e.preventDefault(); 
+                        const targetUrl = linkElement.href;
+                        
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 300); 
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
